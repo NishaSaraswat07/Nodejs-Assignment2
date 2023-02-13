@@ -1,0 +1,17 @@
+{
+  "name": "assignment2",
+  "version": "1.0.0",
+  "description": "date and time project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start":"node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nisha",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^10.0.0",
+    "date-fns": "^2.29.3"
+  }
+}
