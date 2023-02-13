@@ -1,8 +1,12 @@
-import {format, formatDistanceToNow, isAfter, isBefore, isToday, parse, set } from 'date-fns';
+import {format, formatDistanceToNow, 
+        isAfter, isBefore, parse, set } from 'date-fns';
 import fs from "fs";
 import {Command} from "commander"
+import chalk from "chalk"
 
 const date = new Date();
+const day = format(date,'EEEE');
+const time = format(date,' HH:mm ');
 const todaysDate = format(date,'yyyy/MM/dd')
 const currentDate = set(new Date(), {hours: 0, minutes: 0, seconds: 0, milliseconds: 0});
 const courStartDate = new Date(2023,0,31);
@@ -14,8 +18,8 @@ program.parse();
 
 const dateEntered = program.args;
 const dateParse = parse(dateEntered,'yyyy-MM-dd', date);
-console.log(dateEntered);
-console.log(dateParse);
+//console.log(dateEntered);
+//console.log(dateParse);
 
 const dateStatus = () => {
     return(
@@ -24,8 +28,8 @@ const dateStatus = () => {
 
 const writeToFile = 
 `Today's date: ${todaysDate}
-Day : ${format(date,'EEEE')}
-Time :  ${format(date,' HH:mm ')}
+Day : ${day}
+Time :  ${time}
 Course Start Date : ${format(courStartDate,'yyyy/MM/dd')}
 It has been ${result} since we have started this course!
 Date entered by you is: ${dateEntered} 
@@ -59,8 +63,8 @@ const writeToHTMLFile = `
         </tr>
         <tr>
             <td>${todaysDate}</td>
-            <td> ${format(date,'EEEE')}</td>
-            <td>  ${format(date,' HH:mm ')}</td>
+            <td> ${day}</td>
+            <td>  ${time}</td>
             <td> ${format(courStartDate,'yyyy/MM/dd')}</td>
         </tr>  
     </table>
@@ -136,3 +140,13 @@ fs.writeFile("index.css",writeCss,(err)=>{
     if(err) throw err;
     console.log("A css file has been created");
 })
+
+console.log(
+`Today's date: ${chalk.blueBright.bold(todaysDate)}
+Day : ${chalk.cyan.bold.italic.bold(day)}
+Time :  ${chalk.bgYellow.italic.bold(time)}
+Course Start Date : ${chalk.green.bold(format(courStartDate,'yyyy/MM/dd'))}
+It has been ${chalk.bgMagenta.bold(result)} since we have started this course!
+Date entered by you is: ${chalk.blackBright.bold(dateEntered)} 
+The date entered is ${chalk.bgRedBright.bold(dateStatus())} today's day ${todaysDate}
+`)
